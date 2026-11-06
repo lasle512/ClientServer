@@ -1,8 +1,9 @@
 package ru.university.clothes.controller;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,8 @@ import ru.university.clothes.service.SaleService;
 public class SaleController implements SaleApi {
     private final SaleService service;
 
-    public List<SaleResponse> getAll() {
-        return service.findAll();
+    public Page<SaleResponse> getAll(Long storeId, LocalDateTime from, LocalDateTime to, Pageable pageable) {
+        return service.search(storeId, from, to, pageable);
     }
 
     public SaleResponse get(Long id) {
@@ -26,15 +27,6 @@ public class SaleController implements SaleApi {
 
     public SaleResponse create(SaleRequest request) {
         return service.create(request);
-    }
-
-    public SaleResponse update(SaleRequest request, Long id) {
-        return service.update(request, id);
-    }
-
-    public ResponseEntity<Void> delete(Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
 }

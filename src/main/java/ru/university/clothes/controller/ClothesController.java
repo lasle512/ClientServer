@@ -1,7 +1,7 @@
 package ru.university.clothes.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,15 +9,16 @@ import lombok.RequiredArgsConstructor;
 import ru.university.clothes.api.ClothesApi;
 import ru.university.clothes.dto.ProductRequest;
 import ru.university.clothes.dto.ProductResponse;
-import ru.university.service.ClothesService;
+import ru.university.clothes.service.ClothesService;
 
 @RequiredArgsConstructor
 @RestController
 public class ClothesController implements ClothesApi {
     private final ClothesService service;
 
-    public List<ProductResponse> getAll() {
-        return service.findAll();
+    public Page<ProductResponse> getAll(Long categoryId, Long supplierId, boolean lowStock,
+            String title, Pageable pageable) {
+        return service.search(categoryId, supplierId, lowStock, title, pageable);
     }
 
     public ProductResponse get(Long id) {

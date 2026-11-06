@@ -1,4 +1,4 @@
-package ru.university.repository;
+package ru.university.clothes.repository;
 
 import java.util.Optional;
 

@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor 
 @Builder 
 @Entity 
-@Table (name="Supplier")
+@Table (name="suppliers")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Supplier {
 

@@ -2,18 +2,15 @@ package ru.university.clothes.dto;
 
 import java.time.LocalDate;
 
-import ru.university.clothes.model.Supplier;
-import ru.university.clothes.model.Category;
-
 public record ProductResponse(
     Long id,
     String title,
-    Category category,
-    Supplier supplier,
+    Long categoryId,
+    String categoryName,
+    Long supplierId,
+    String supplierName,
     int price,
     int stockQuantity,
     LocalDate lastRestockedAt
 ) {
-
-
 }

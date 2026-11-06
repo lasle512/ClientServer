@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import ru.university.clothes.api.SupplierApi;
 import ru.university.clothes.dto.SupplierRequest;
 import ru.university.clothes.dto.SupplierResponse;
-import ru.university.service.SupplierService;
+import ru.university.clothes.service.SupplierService;
 
 @RequiredArgsConstructor
 @RestController

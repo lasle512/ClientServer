@@ -17,13 +17,13 @@ import lombok.Setter;
 @AllArgsConstructor 
 @Builder 
 @Entity 
-@Table (name="Store")
+@Table (name="stores")
 public class Store {
 
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false, updatable = false)
+    @Column (nullable = false)
     private String address;
 }

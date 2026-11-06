@@ -1,6 +1,5 @@
 package ru.university.clothes.model;
 
-import java.security.Permission;
 import java.util.HashSet;
 import java.util.Set;
 

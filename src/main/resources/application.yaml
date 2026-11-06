@@ -19,3 +19,7 @@ spring:
       spec: maximumSize=1000, expireAfterWrite=5m
 server:
   port: 8081
+
+clothes:
+  # товар с остатком не больше этого числа считается заканчивающимся
+  low-stock-threshold: 5

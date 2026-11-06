@@ -3,15 +3,13 @@ package ru.university.clothes.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import ru.university.clothes.model.SaleItem;
-import ru.university.clothes.model.Store;
-
 public record SaleResponse(
         Long id,
-        Store store,
-        List<SaleItem> items,
+        Long storeId,
+        String storeAddress,
+        List<SaleItemResponse> items,
+        int total,
         LocalDateTime soldAt,
         String cashier
 ) {
-
 }
