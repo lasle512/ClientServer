@@ -13,26 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import ru.university.clothes.dto.ClothesRequest;
-import ru.university.clothes.dto.ClothesResponse;
+import ru.university.clothes.dto.ProductRequest;
+import ru.university.clothes.dto.ProductResponse;
 
 @RequestMapping("/api/clothes")
 @Tag(name = "Clothes Controller")
 public interface ClothesApi {
         @GetMapping()
-        public List<ClothesResponse> getAll();
+        public List<ProductResponse> getAll();
 
         @GetMapping("/{id}")
-        public ClothesResponse get(
+        public ProductResponse get(
                         @PathVariable Long id);
 
         @PostMapping
-        public ClothesResponse create(
-                        @RequestBody @Valid ClothesRequest entity);
+        public ProductResponse create(
+                        @RequestBody @Valid ProductRequest entity);
 
         @PutMapping("/{id}")
-        public ClothesResponse update(
-                        @RequestBody @Valid ClothesRequest entity, @PathVariable Long id);
+        public ProductResponse update(
+                        @RequestBody @Valid ProductRequest entity, @PathVariable Long id);
 
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id);

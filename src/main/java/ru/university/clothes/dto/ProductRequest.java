@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import ru.university.clothes.model.Category;
 import ru.university.clothes.model.Supplier;
 
-public record ClothesRequest(
+public record ProductRequest(
     @NotBlank(message = "Title cannot be blank") String title,
     @NotNull(message = "Category cannot be null") Category category,
     @NotNull(message = "Supplier cannot be null") Supplier supplier,

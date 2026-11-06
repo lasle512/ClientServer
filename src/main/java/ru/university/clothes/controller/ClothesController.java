@@ -7,28 +7,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import ru.university.clothes.api.ClothesApi;
-import ru.university.clothes.dto.ClothesRequest;
-import ru.university.clothes.dto.ClothesResponse;
-import ru.university.clothes.service.ClothesService;
+import ru.university.clothes.dto.ProductRequest;
+import ru.university.clothes.dto.ProductResponse;
+import ru.university.service.ClothesService;
 
 @RequiredArgsConstructor
 @RestController
 public class ClothesController implements ClothesApi {
     private final ClothesService service;
 
-    public List<ClothesResponse> getAll() {
+    public List<ProductResponse> getAll() {
         return service.findAll();
     }
 
-    public ClothesResponse get(Long id) {
+    public ProductResponse get(Long id) {
         return service.findById(id);
     }
 
-    public ClothesResponse create(ClothesRequest request) {
+    public ProductResponse create(ProductRequest request) {
         return service.create(request);
     }
 
-    public ClothesResponse update(ClothesRequest request, Long id) {
+    public ProductResponse update(ProductRequest request, Long id) {
         return service.update(request, id);
     }
 
