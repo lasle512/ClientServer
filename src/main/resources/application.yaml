@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: Clothes
+
+server:
+  port: 8081
