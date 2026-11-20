@@ -3,6 +3,8 @@ package ru.university.clothes.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,8 +30,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode (onlyExplicitlyIncluded = true)
-public class Role {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -37,14 +39,14 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String title;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-        cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable (
-        name = "role_permissions",
-        joinColumns = @JoinColumn(name="role_id"),
-        inverseJoinColumns = @JoinColumn (name="permission_id")
-    ) 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE})
+    @JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     @Builder.Default
     private Set<Permission> permissions = new HashSet<>();
+
+    @Override
+    public String getAuthority() {
+        return this.title.toUpperCase();
+    }
 }

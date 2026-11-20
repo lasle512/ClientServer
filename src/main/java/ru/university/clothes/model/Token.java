@@ -32,7 +32,7 @@ public class Token {
     @ManyToOne
     private User user;
 
-    public Token(TokenType type, String value, LocalDateTime expiryDate, boolean disabled,User user) {
+    public Token(TokenType type, String value, LocalDateTime expiryDate, boolean disabled, User user) {
         this.disabled = disabled;
         this.expiryDate = expiryDate;
         this.type = type;
@@ -40,5 +40,5 @@ public class Token {
         this.value = value;
     }
 
-    
+
 }
