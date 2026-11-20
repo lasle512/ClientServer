@@ -47,4 +47,7 @@ public class Product {
 
     @Column (nullable = false)
     private LocalDate lastRestockedAt;
+
+    @Column (nullable = true)
+    private String photoUrl;
 }

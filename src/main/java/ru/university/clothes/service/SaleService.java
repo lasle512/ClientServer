@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.university.clothes.dto.SaleItemRequest;
 import ru.university.clothes.dto.SaleItemResponse;
@@ -26,24 +27,12 @@ import ru.university.clothes.repository.spec.SaleSpecifications;
 
 @Slf4j
 @Service 
+@RequiredArgsConstructor
 public class SaleService {
 
     private final SaleRepository repository;
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;
-    private final int lowStockThreshold;
-
-    public SaleService(
-        SaleRepository repository,
-        StoreRepository storeRepository,
-        ProductRepository productRepository,
-        @Value("${clothes.low-stock-threshold:5}") int lowStockThreshold
-    ) {
-        this.repository = repository;
-        this.storeRepository = storeRepository;
-        this.productRepository = productRepository;
-        this.lowStockThreshold = lowStockThreshold;
-    }
 
     @Transactional (readOnly = true)
     public Page<SaleResponse> search(Long storeId, LocalDateTime from, LocalDateTime to, Pageable pageable) {
@@ -95,7 +84,7 @@ public class SaleService {
         saved.getItems().stream()
             .map(SaleItem::getProduct)
             .distinct()
-            .filter(product -> product.getStockQuantity() <= lowStockThreshold)
+            .filter(product -> product.getStockQuantity() < 5) // Assuming 5 is the low stock threshold
             .forEach(product -> log.warn("Low stock: product {} '{}' has {} left",
                 product.getId(), product.getTitle(), product.getStockQuantity()));
 

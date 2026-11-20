@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import ru.university.clothes.dto.CsvImportResult;
 import ru.university.clothes.dto.ProductRequest;
 import ru.university.clothes.dto.ProductResponse;
 
@@ -29,6 +32,8 @@ public interface ClothesApi {
                         @RequestParam(required = false) Long supplierId,
                         @RequestParam(defaultValue = "false") boolean lowStock,
                         @RequestParam(required = false) String title,
+                        @RequestParam(required = false) String photoUrl,
+                        @RequestParam(required = false) Integer stockQuantity,
                         @ParameterObject @PageableDefault(size = 10, sort = "title") Pageable pageable);
 
         @GetMapping("/{id}")
@@ -45,4 +50,12 @@ public interface ClothesApi {
 
         @DeleteMapping("/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id);
+
+        
+        @PostMapping(value = "/{id}/photo", consumes = "multipart/form-data")
+        public String uploadPhoto(@PathVariable Long id, @RequestPart("file") MultipartFile file);
+
+        @PostMapping(value = "/import", consumes = "multipart/form-data")
+        public CsvImportResult importCsv(@RequestPart("file") MultipartFile file);
+
 }

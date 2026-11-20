@@ -1,13 +1,15 @@
 package ru.university.clothes.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
 import ru.university.clothes.dto.ProductRequest;
 import ru.university.clothes.dto.ProductResponse;
 import ru.university.clothes.model.Category;
@@ -17,37 +19,26 @@ import ru.university.clothes.repository.CategoryRepository;
 import ru.university.clothes.repository.ProductRepository;
 import ru.university.clothes.repository.SupplierRepository;
 import ru.university.clothes.repository.spec.ClothesSpecifications;
+import ru.university.clothes.storage.StorageService;
 
 @Service 
+@RequiredArgsConstructor
 public class ClothesService {
 
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
     private final SupplierRepository supplierRepository;
-    private final int lowStockThreshold;
-
-    public ClothesService(
-        ProductRepository repository,
-        CategoryRepository categoryRepository,
-        SupplierRepository supplierRepository,
-        @Value("${clothes.low-stock-threshold:5}") int lowStockThreshold
-    ) {
-        this.repository = repository;
-        this.categoryRepository = categoryRepository;
-        this.supplierRepository = supplierRepository;
-        this.lowStockThreshold = lowStockThreshold;
-    }
+    private final StorageService storageService;
 
     @Transactional (readOnly = true)
     public Page<ProductResponse> search(
         Long categoryId,
         Long supplierId,
-        boolean lowStock,
+        Integer lowStock,
         String title,
         Pageable pageable
     ) {
-        Integer maxStock = lowStock ? lowStockThreshold : null;
-        return repository.findAll(ClothesSpecifications.withFilter(categoryId, supplierId, maxStock, title), pageable)
+        return repository.findAll(ClothesSpecifications.withFilter(categoryId, supplierId, lowStock, title), pageable)
                         .map(this::toResponse);
     }
 
@@ -58,6 +49,13 @@ public class ClothesService {
 
     @Transactional
     public ProductResponse create(ProductRequest request) {
+
+        Category category = categoryRepository.findById(request.categoryId()).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+
+        Supplier supplier = supplierRepository.findById(request.supplierId()).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found"));
+
         Product product = Product.builder()
             .title(request.title())
             .category(getCategory(request.categoryId()))
@@ -88,6 +86,15 @@ public class ClothesService {
         repository.delete(getEntity(id));
     }
 
+    @Transactional 
+    @CacheEvict(cacheNames = "ProductCatalog", allEntries = true)
+    public String uploadPhoto(Long id, MultipartFile file){
+        Product product = repository.findById(id).orElseThrow(() -> new RuntimeException("product not found "));
+        String url = storageService.store("product-photos", file);
+        product.setPhotoUrl(url);
+        return url;
+    }
+
     private Product getEntity(Long id) {
         return repository.findById(id).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
@@ -113,7 +120,8 @@ public class ClothesService {
             product.getSupplier().getName(),
             product.getPrice(),
             product.getStockQuantity(),
-            product.getLastRestockedAt()
+            product.getLastRestockedAt(),
+            product.getPhotoUrl()
         );
     }
 

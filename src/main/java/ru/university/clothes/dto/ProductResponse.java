@@ -11,6 +11,7 @@ public record ProductResponse(
     String supplierName,
     int price,
     int stockQuantity,
-    LocalDate lastRestockedAt
+    LocalDate lastRestockedAt,
+    String photoUrl
 ) {
 }
