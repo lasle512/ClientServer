@@ -23,10 +23,12 @@ import jakarta.validation.Valid;
 import ru.university.clothes.dto.CsvImportResult;
 import ru.university.clothes.dto.ProductRequest;
 import ru.university.clothes.dto.ProductResponse;
+import ru.university.clothes.dto.SaleResponse;
+import ru.university.clothes.dto.SupplierResponse;
 
 @RequestMapping("/api/equipment")
 @Tag(name = "Equipment Controller")
-public interface EquipmentApi {
+public interface ProductApi {
     @GetMapping()
     public Page<ProductResponse> getAll(
             @RequestParam(required = false) Long categoryId,

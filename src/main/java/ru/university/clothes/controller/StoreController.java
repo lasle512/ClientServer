@@ -6,29 +6,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import ru.university.clothes.api.CategoryApi;
-import ru.university.clothes.dto.CategoryRequest;
-import ru.university.clothes.dto.CategoryResponse;
-import ru.university.clothes.service.CategoryService;
+import ru.university.clothes.dto.StoreRequest;
+import ru.university.clothes.dto.StoreResponse;
+import ru.university.clothes.service.StoreService;
 
 @RequiredArgsConstructor
 @RestController
-public class CategoryController implements CategoryApi {
-    private final CategoryService service;
+public class StoreController {
+    private final StoreService service;
 
-    public List<CategoryResponse> getAll() {
+    public List<StoreResponse> getAll() {
         return service.findAll();
     }
 
-    public CategoryResponse get(Long id) {
+    public StoreResponse get(Long id) {
         return service.findById(id);
     }
 
-    public CategoryResponse create(CategoryRequest request) {
+    public StoreResponse create(StoreRequest request) {
         return service.create(request);
     }
 
-    public CategoryResponse update(CategoryRequest request, Long id) {
+    public StoreResponse update(StoreRequest request, Long id) {
         return service.update(request, id);
     }
 

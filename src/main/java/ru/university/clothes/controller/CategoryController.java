@@ -6,29 +6,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import ru.university.clothes.api.SupplierApi;
-import ru.university.clothes.dto.SupplierRequest;
-import ru.university.clothes.dto.SupplierResponse;
-import ru.university.clothes.service.SupplierService;
+import ru.university.clothes.dto.CategoryRequest;
+import ru.university.clothes.dto.CategoryResponse;
+import ru.university.clothes.service.CategoryService;
 
 @RequiredArgsConstructor
 @RestController
-public class SupplierController implements SupplierApi {
-    private final SupplierService service;
+public class CategoryController {
+    private final CategoryService service;
 
-    public List<SupplierResponse> getAll() {
+    public List<CategoryResponse> getAll() {
         return service.findAll();
     }
 
-    public SupplierResponse get(Long id) {
+    public CategoryResponse get(Long id) {
         return service.findById(id);
     }
 
-    public SupplierResponse create(SupplierRequest request) {
+    public CategoryResponse create(CategoryRequest request) {
         return service.create(request);
     }
 
-    public SupplierResponse update(SupplierRequest request, Long id) {
+    public CategoryResponse update(CategoryRequest request, Long id) {
         return service.update(request, id);
     }
 
