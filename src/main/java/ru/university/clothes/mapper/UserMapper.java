@@ -15,7 +15,7 @@ public class UserMapper {
     public static UserDto userToUserDto(User user) {
         return new UserDto(
                 user.getId(),
-                user.getUserName(),
+                user.getUsername(),
                 user.getPassword(),
                 // Собираем все имена ролей (например, ["ROLE_USER", "ROLE_ADMIN"])
                 getUserRoleNames(user),
@@ -25,7 +25,7 @@ public class UserMapper {
 
     public static User userDtoToUser(UserDto dto) {
         User user = new User();
-        user.setUserName(dto.username());
+        user.setUsername(dto.username());
         // Если в будущем понадобится восстанавливать роли из DTO, логику нужно будет
         // добавить сюда
         return user;
@@ -33,7 +33,7 @@ public class UserMapper {
 
     public static UserLoggedDto userToUserLoggedDto(User user) {
         return new UserLoggedDto(
-                user.getUserName(),
+                user.getUsername(),
                 getUserRoleNames(user),
                 getUserPermissions(user));
     }

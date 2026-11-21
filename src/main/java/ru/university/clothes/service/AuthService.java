@@ -56,7 +56,7 @@ public class AuthService {
                         loginRequest.username(), loginRequest.password()));
 
         String username = loginRequest.username();
-        User user = userRepository.findByUserName(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
         boolean accessTokenValid = tokenProvider.validateToken(accessToken);
@@ -138,7 +138,7 @@ public class AuthService {
             throw new RuntimeException("Refresh token is invalid");
 
         String username = tokenProvider.getUsernameFromToken(refreshToken);
-        User user = userRepository.findByUserName(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
         Set<String> roleNames = user.getRoles().stream()
@@ -165,7 +165,7 @@ public class AuthService {
         SecurityContextHolder.clearContext();
 
         String username = tokenProvider.getUsernameFromToken(accessToken);
-        User user = userRepository.findByUserName(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
         revokeAllTokenOfUser(user);
@@ -191,7 +191,7 @@ public class AuthService {
 
         String username = authentication.getName();
 
-        User user = userRepository.findByUserName(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("User not found"));
 
         return UserMapper.userToUserLoggedDto(user);

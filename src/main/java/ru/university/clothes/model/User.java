@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,13 +38,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    @Column(nullable = false)
-    private String userName;
+    @Column(name = "user_name", nullable = false)
+    private String username;
     private String fullName;
     @Column(nullable = false)
     @JsonIgnore
@@ -97,5 +98,4 @@ public class User {
 
         return authorities;
     }
-
 }

@@ -1,0 +1,3 @@
+const es = new EventSource('/api/reports/stream', { withCredentials: true });
+es.addEventListener('report-ready', e => console.log('ПОЛУЧЕНО:', JSON.parse(e.data)));
+es.onerror = err => console.error('ОШИБКА:', err);

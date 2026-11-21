@@ -14,8 +14,8 @@ public class LoginLogger implements ApplicationListener<AuthenticationSuccessEve
 
     @Override
     public void onApplicationEvent(@NonNull AuthenticationSuccessEvent event) {
-        String userName = event.getAuthentication().getName();
-        Logger.getLogger("AuthenticationSuccessEvent").info(ANSI_PURPLE + "User [" + userName + "] logged successfully" + ANSI_RESET);
+        String username = event.getAuthentication().getName();
+        Logger.getLogger("AuthenticationSuccessEvent").info(ANSI_PURPLE + "User [" + username + "] logged successfully" + ANSI_RESET);
     }
 
 }

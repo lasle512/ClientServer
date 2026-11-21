@@ -19,10 +19,11 @@ public class ReportScheduler {
     private final ApplicationEventPublisher eventPublisher;
 
     // @Scheduled (cron = "0 30 6 * * 1-5")
-    @Scheduled(fixedRate = 10000) // 5 секунд
+    @Scheduled(fixedRate = 1000) // 5 секунд
     public void scheduleReportGeneration() {
         String reportId = UUID.randomUUID().toString();
-        log.info("[Поток : {}] Инициирована генерация отчета {}",
+        
+        log.info("[Thread : {}] report initiated {}",
                 Thread.currentThread().getName(),
                 reportId);
 

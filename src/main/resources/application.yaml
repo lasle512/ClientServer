@@ -7,8 +7,8 @@ spring:
     name: Clothes
   datasource:
     url: jdbc:postgresql://localhost:5432/clothes
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: postgres
+    password: 1
   jpa:
     hibernate:
       ddl-auto: update

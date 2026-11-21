@@ -38,12 +38,12 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         requestStartTimes.put(requestId, startTime);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = (authentication != null && authentication.isAuthenticated()) ? authentication.getName()
+        String username = (authentication != null && authentication.isAuthenticated()) ? authentication.getName()
                 : "anonymous";
         String method = request.getMethod();
 
         log
-                .info(HttpMethodColors.getMethodColor(method) + "User: " + userName + " requested URL: "
+                .info(HttpMethodColors.getMethodColor(method) + "User: " + username + " requested URL: "
                         + request.getRequestURI() + " [" + method + "]" + ANSIColor.RESET.getCode());
         return true;
     }
@@ -65,11 +65,11 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
 
             // Log the response details with the elapsed time
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String userName = (authentication != null && authentication.isAuthenticated()) ? authentication.getName()
+            String username = (authentication != null && authentication.isAuthenticated()) ? authentication.getName()
                     : "anonymous";
             String method = request.getMethod();
             log.info(HttpMethodColors.getMethodColor(method) +
-                    "User: " + userName + " completed URL: " +
+                    "User: " + username + " completed URL: " +
                     request.getRequestURI() + " [" + method + "] in " + elapsedTime + " ms" +
                     ANSIColor.RESET.getCode());
         }

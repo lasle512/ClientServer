@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public UserDto getUser(String username) {
-        User user = userRepository.findByUserName(username).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new ResourceNotFoundException("User not found"));
         return UserMapper.userToUserDto(user);
     }
@@ -73,7 +73,7 @@ public class UserService {
             }
         }
 
-        user.setUserName(userDto.username());
+        user.setUsername(userDto.username());
         user.setPassword(passwordEncoder.encode(userDto.password()));
         user.setRoles(roles);
 

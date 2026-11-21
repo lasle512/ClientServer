@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import jakarta.persistence.LockModeType;
 import ru.university.clothes.model.Product;
 
+import java.util.List;
+import ru.university.clothes.dto.ProductReportRow;
+
 public interface ProductRepository extends
    JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
@@ -17,4 +20,15 @@ public interface ProductRepository extends
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.id = :id")
     Optional<Product> findByIdForUpdate(Long id);
+
+    @Query("""
+    select new ru.university.clothes.dto.ProductReportRow(
+        p.id, p.title, c.name, s.name, p.price, p.stockQuantity, p.lastRestockedAt)
+    from Product p
+    join p.category c
+    join p.supplier s
+    order by p.id
+    """)
+    List<ProductReportRow> findReportRows();
+
 }

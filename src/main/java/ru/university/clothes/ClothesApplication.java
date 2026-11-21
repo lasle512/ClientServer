@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import ru.university.clothes.repository.RoleRepository;
 import ru.university.clothes.repository.UserRepository;
 
 @EnableCaching
+@EnableAsync
 @SpringBootApplication
 @RequiredArgsConstructor
 public class ClothesApplication implements ApplicationRunner {
@@ -50,21 +52,21 @@ public class ClothesApplication implements ApplicationRunner {
 
         // Исправлено: используем метод билдера .roles() и передаем Set.of(...)
         User admin = User.builder()
-                .userName("admin")
+                .username("admin")
                 .password(passwordEncoder.encode("admin"))
                 .roles(Set.of(roleAdmin))
                 .build();
         userRepository.save(admin);
 
         User user = User.builder()
-                .userName("user")
+                .username("user")
                 .password(passwordEncoder.encode("user"))
                 .roles(Set.of(roleUser))
                 .build();
         userRepository.save(user);
 
         User manager = User.builder()
-                .userName("manager")
+                .username("manager")
                 .password(passwordEncoder.encode("manager"))
                 .roles(Set.of(roleManager))
                 .build();
